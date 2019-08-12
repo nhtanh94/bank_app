@@ -5,7 +5,7 @@ class DemoResource{
   Future<ApiResponseData> demo(BuildContext context) async {
     return ApiResponseData(
       errorCode: 0,
-      errorDescription: "",
+      message: "",
       data: {
         "demos": [
           {"url": "https://highlandscoffee.com.vn/vnt_upload/product/05_2018/CFD.png"},

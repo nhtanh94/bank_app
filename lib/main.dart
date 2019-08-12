@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import './common/interactions.dart';
-import './common/constant.dart';
-import './ultilites/ultility.dart';
-import 'modules/demo_module/src/ui/demo_screen.dart';
+
+import 'modules/demo_module/src/ui/login_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -14,7 +12,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: DemoScreen(),
+      home: LoginPage(),
     );
   }
 }

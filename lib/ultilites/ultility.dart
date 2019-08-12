@@ -18,6 +18,18 @@ hideProgressDialog() {
     }
 }
 
+showMsDialog(BuildContext context,String title,String msg){
+ showDialog(context: context,
+ builder: (context)=>AlertDialog(
+   title: Text(title),
+   content: Text(msg),
+   actions: <Widget>[
+     new FlatButton(onPressed: (){Navigator.of(context).pop(showMsDialog);}, child: Text("OK"))
+   ],
+ )
+ );
+}
+
 hideKeyboard(){
   SystemChannels.textInput.invokeMethod('TextInput.hide');
 }
