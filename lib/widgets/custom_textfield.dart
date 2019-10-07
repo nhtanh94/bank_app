@@ -29,7 +29,7 @@ class CustomTextField extends StatelessWidget {
       decoration: InputDecoration(
           labelText: labelText??"",
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(6)),
-          prefixIcon: Icon(prefixIcon),
+          prefixIcon: Icon(prefixIcon, color: primaryColor,),
           contentPadding: EdgeInsets.all(0.0)),
       style: TextStyle(fontSize: sizeBody1),
       onSubmitted: onSubmitted,

@@ -19,6 +19,7 @@ class LoginBloc{
     showProgressDialog(context);
     ApiResponseData response = await _repository.login(context, model);
     hideProgressDialog();
+    print(response.message);
     if(response.errorCode == 0){
       _model = UserResponseModel.fromJson(response.data);
       addUserToRF();

@@ -55,7 +55,6 @@ class ApiConnection {
     final response = await http
         .get(fullUrl, headers: await headers(header))
         .timeout(new Duration(seconds: timeOut));
-
     return await _handleResponse(context, response);
   }
 
@@ -68,7 +67,7 @@ class ApiConnection {
     final response = await http
         .post(serverUrl + url, headers: await headers(header), body: params == null?"":json.encode(params))
         .timeout(new Duration(seconds: timeOut));
-
+    print(json.encode(params));
     return await _handleResponse(context, response);
   }
 

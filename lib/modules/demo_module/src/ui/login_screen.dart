@@ -40,6 +40,7 @@ class _State extends State<_Content> {
   // focusText field
   final FocusNode _accountFocus = FocusNode();
   final FocusNode _passwordFocus = FocusNode();
+  bool _checked = false;
 
   @override
   void initState() {
@@ -69,7 +70,7 @@ class _State extends State<_Content> {
           children: <Widget>[
             Container(
               width: MediaQuery.of(context).size.width * 0.7,
-              child: FlutterLogo(),
+              child: FlutterLogo(colors: Colors.green,),
             ),
             Container(
               height: 10.0,
@@ -133,9 +134,23 @@ class _State extends State<_Content> {
             color: Colors.white,
           ),
         ),
-        color: Colors.blue,
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(6))),
+      ),
+    );
+  }
+  Widget buildRemindAccount(){
+    return Container(
+      child: Row(
+        children: <Widget>[
+          Checkbox(value: _checked,onChanged: (bool check)=>{
+            setState((){
+              _checked = check;
+              print(_checked.toString());
+          })
+          },checkColor: Colors.black,activeColor: Colors.green,),
+          Text("Save Account and Password")
+        ],
       ),
     );
   }
@@ -158,6 +173,7 @@ class _State extends State<_Content> {
             Container(height: 10.0,),
             buildButtonLogin(),
             Container(height: 10.0,),
+            buildRemindAccount()
           ],
         ),
       ),

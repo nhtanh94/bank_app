@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttersetup/common/interactions.dart';
 import 'package:fluttersetup/models/get_list_transaction_request.dart';
-import 'package:fluttersetup/models/transaction_reponse.dart';
 import 'package:fluttersetup/models/transaction_response_model.dart';
 import 'package:fluttersetup/resources/repositories.dart';
 import 'package:fluttersetup/ultilites/ultility.dart';
@@ -40,9 +39,9 @@ class TransactionBloc{
     showProgressDialog(context);
     ApiResponseData response = await _repository.getListTransaction(context, model);
     hideProgressDialog();
+
     if(response.errorCode == 0){
       _model = TransactionResponseModel.fromJson(response.data);
-
       setModel(_model);
     }
   }
