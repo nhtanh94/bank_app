@@ -5,7 +5,7 @@ import 'package:fluttersetup/models/status_model.dart';
 import 'package:fluttersetup/models/transaction_reponse.dart';
 import 'package:fluttersetup/models/transaction_request.dart';
 import 'package:fluttersetup/modules/demo_module/src/bloc/add_transaction_bloc.dart';
-import 'package:fluttersetup/modules/demo_module/src/ui/transaction_screen.dart';
+import 'package:fluttersetup/modules/demo_module/src/ui/seo_page.dart';
 import 'package:fluttersetup/widgets/widget.dart';
 import 'package:fluttersetup/ultilites/ultility.dart';
 
@@ -230,28 +230,14 @@ class _State extends State<AddTransactionScreen> {
   }
   void postTransaction(){
     TransactionRequest model = new TransactionRequest();
-    model.status = _status;
-    model.customer = new CustomerRequest();
-    model.customer.haveCard = false;
-    model.customer.iDCard = _idcardController.text;
-    model.customer.cardExpries = _expireController.text;
-    model.customer.fullName =_fullfameController.text;
-    model.customer.passport = _passportController.text;
-    model.customer.phone = _phoneController.text;
-    model.customer.address =_addressController.text;
-    model.bankName = _bankController.text;
-    model.referCode = _refercodeController.text;
-    model.chanel = _chanelController.text;
-    model.months = int.parse(_monthsController.text);
-    model.note1 = _note1Controller.text;
-    _bloc.postTransaction(context,model);
+    _bloc.postTransaction(context,model,AddTransactionScreen(null));
 }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Add Customer"),
-        leading: FlatButton(onPressed: ()=>navigatorPush(context,TransactionScreen(),true), child: Icon(Icons.arrow_back)),
+        leading: FlatButton(onPressed: ()=>navigatorPush(context,SeoPage(),true), child: Icon(Icons.arrow_back)),
         actions: <Widget>[
           FlatButton(child:
           Row(

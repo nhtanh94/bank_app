@@ -8,6 +8,7 @@ import 'package:fluttersetup/modules/demo_module/src/bloc/login_bloc.dart';
 import 'package:fluttersetup/ultilites/ultility.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
 import 'package:fluttersetup/widgets/widget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../common/constant.dart';
 import '../../../../ultilites/ultility.dart';
 
@@ -33,7 +34,8 @@ class _Content extends StatefulWidget {
 
 class _State extends State<_Content> {
   LoginBloc _bloc;
-
+  String user ='';
+  String pass='';
   TextEditingController _accountController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
 
@@ -41,7 +43,18 @@ class _State extends State<_Content> {
   final FocusNode _accountFocus = FocusNode();
   final FocusNode _passwordFocus = FocusNode();
   bool _checked = false;
-
+  getRefer() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if(prefs == null)
+      prefs = await SharedPreferences.getInstance();
+    setState(() {
+      user = prefs.getString("username");
+      pass = prefs.getString("password");
+      _checked = prefs.getBool("checked");
+    });
+    _accountController.text = user;
+    _passwordController.text = pass;
+  }
   @override
   void initState() {
     // TODO: implement initState
@@ -53,6 +66,7 @@ class _State extends State<_Content> {
             buildKeyboardAction(_accountFocus),
             buildKeyboardAction(_passwordFocus)
       ]));
+    getRefer();
   }
 
   @override
@@ -114,7 +128,7 @@ class _State extends State<_Content> {
       onSubmitted: (event) => _bloc.login(context, UserRequestModel(
           account: _accountController.text,
           pass: _passwordController.text
-      )),
+      ),_checked),
     );
   }
 
@@ -125,7 +139,7 @@ class _State extends State<_Content> {
         onPressed: () => _bloc.login(context, UserRequestModel(
             account: _accountController.text,
             pass: _passwordController.text
-        )),
+        ),_checked),
         padding: EdgeInsets.all(10.0),
         child: Text(
           "Login",

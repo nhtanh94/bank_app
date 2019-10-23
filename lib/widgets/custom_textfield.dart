@@ -34,6 +34,8 @@ class CustomTextField extends StatelessWidget {
       style: TextStyle(fontSize: sizeBody1),
       onSubmitted: onSubmitted,
       obscureText: obscureText,
+      keyboardType: TextInputType.multiline,
+      maxLines: null,
     );
   }
 }

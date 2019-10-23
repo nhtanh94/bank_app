@@ -33,7 +33,7 @@ class AddTransactionBloc{
     _streamHaveCard.close();
   }
 
-  postTransaction(BuildContext context,TransactionRequest model) async {
+  postTransaction(BuildContext context,TransactionRequest model,Widget screen) async {
     if(_prefs == null)
       _prefs = await SharedPreferences.getInstance();
     TransactionRequest postRequest = TransactionRequest();
@@ -44,7 +44,7 @@ class AddTransactionBloc{
     ApiResponseData response = await _repository.postTransaction(context, postRequest);
     hideProgressDialog();
     if(response.errorCode == 0){
-      navigatorPush(context,TransactionScreen(),true);
+      navigatorPush(context,screen,true);
     }
   }
 }

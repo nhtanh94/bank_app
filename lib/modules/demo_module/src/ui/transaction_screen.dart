@@ -25,6 +25,13 @@ class _State extends State<TransactionScreen> {
     super.dispose();
     _bloc.dispose();
   }
+  String GetStatus(int stt){
+    switch(stt){
+      case 0: return "Đã có thẻ";
+      case 1: return "Đăng ký thẻ";
+    }
+    return "Error";
+  }
   Widget _buildProfile(int status,String fullName,String statusTransaction,String dateCreate,String note,Widget screen){
     return Container(
       margin: EdgeInsets.all(10.0),
@@ -44,8 +51,7 @@ class _State extends State<TransactionScreen> {
                 Text(fullName,style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17.0),),
                 Text("Trạng thái : " +statusTransaction,style: TextStyle(color: Colors.green,fontWeight: FontWeight.bold,fontSize: 15.0),),
                 Text("Ngày tạo : " + dateCreate,style: TextStyle(color: Colors.red,fontWeight: FontWeight.bold,fontSize: 15.0),),
-                Text("Ghi chú Seo : " +note,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13.0))
-
+                Text("Ghi chú  : " +note,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13.0))
               ],
             ),
           )
@@ -70,7 +76,7 @@ class _State extends State<TransactionScreen> {
           TransactionResponseModel model = snapshot.data;
           return model == null?Container():ListView(
             children: model.data.map((model){
-              return _buildProfile(model.status,model.customer.fullName,"Đã nhận thẻ",model.dateCreate,model.note1,AddTransactionScreen(model));
+              return _buildProfile(model.status,model.customer.fullName,GetStatus(model.status),model.dateCreate,model.note1,AddTransactionScreen(model));
             }).toList(),
           );
         },
