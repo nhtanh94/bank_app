@@ -50,7 +50,7 @@ class _State extends State<_Content> {
     setState(() {
       user = prefs.getString("username");
       pass = prefs.getString("password");
-      _checked = prefs.getBool("checked");
+      _checked = prefs.getBool("checked") != null? prefs.getBool("checked"):false;
     });
     _accountController.text = user;
     _passwordController.text = pass;

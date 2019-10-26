@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
 import './progress_dialog.dart';
 
@@ -17,7 +18,10 @@ hideProgressDialog() {
       pr = null;
     }
 }
-
+String FormatDate(DateTime date){
+  DateFormat dateFormat = DateFormat("MM-dd-yyyy HH:mm");
+  return dateFormat.format(date);
+}
 showMsDialog(BuildContext context,String title,String msg){
  showDialog(context: context,
  builder: (context)=>AlertDialog(

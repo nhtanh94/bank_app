@@ -14,6 +14,7 @@ final appName = "";
 // Color
 final primaryColor = HexColor("007F55");
 final accentColor = HexColor("A2007C");
+final lineCardColor = HexColor("000000");
 
 // Size
 final sizeBody2 = 14.0;

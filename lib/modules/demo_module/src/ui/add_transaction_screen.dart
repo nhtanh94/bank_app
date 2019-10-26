@@ -5,7 +5,7 @@ import 'package:fluttersetup/models/status_model.dart';
 import 'package:fluttersetup/models/transaction_reponse.dart';
 import 'package:fluttersetup/models/transaction_request.dart';
 import 'package:fluttersetup/modules/demo_module/src/bloc/add_transaction_bloc.dart';
-import 'package:fluttersetup/modules/demo_module/src/ui/seo_page.dart';
+import 'package:fluttersetup/modules/demo_module/src/ui/seo/seo_page.dart';
 import 'package:fluttersetup/widgets/widget.dart';
 import 'package:fluttersetup/ultilites/ultility.dart';
 

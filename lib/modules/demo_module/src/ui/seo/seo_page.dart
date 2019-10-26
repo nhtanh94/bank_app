@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttersetup/modules/demo_module/src/ui/login_screen.dart';
-import 'package:fluttersetup/modules/demo_module/src/ui/manager/havecard.dart';
-import 'package:fluttersetup/modules/demo_module/src/ui/manager/nocard.dart';
+import 'package:fluttersetup/modules/demo_module/src/ui/seo/havecard.dart';
+import 'package:fluttersetup/modules/demo_module/src/ui/seo/nocard.dart';
 import 'package:fluttersetup/ultilites/hex_color.dart';
 import 'package:fluttersetup/ultilites/ultility.dart';
 import 'package:shared_preferences/shared_preferences.dart';

@@ -70,6 +70,18 @@ class ApiConnection {
     print(json.encode(params));
     return await _handleResponse(context, response);
   }
+  Future<ApiResponseData> put(BuildContext context, String url, Map<String, dynamic> params,
+      [Map<String, String> header]) async {
+    ApiResponseData data = await _checkConnectivity();
+    if(data != null)
+      return data;
+
+    final response = await http
+        .put(serverUrl + url, headers: await headers(header), body: params == null?"":json.encode(params))
+        .timeout(new Duration(seconds: timeOut));
+    print(json.encode(params));
+    return await _handleResponse(context, response);
+  }
 
   Future<ApiResponseData> _checkConnectivity() async {
     var connectivityResult = await (new Connectivity().checkConnectivity());
@@ -100,6 +112,7 @@ class ApiConnection {
           errorCode: -1,
           message: noConnectionError
       );
+      await openAlertDialog(context, "Thông báo", noConnectionError);
       return response;
     }
   }

@@ -8,7 +8,7 @@ import 'package:fluttersetup/ultilites/ultility.dart';
 import 'package:fluttersetup/widgets/widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../seo_page.dart';
+import 'seo_page.dart';
 
 class AddHaveCardPage extends StatefulWidget {
   @override
@@ -268,11 +268,13 @@ class _AddHaveCardPageState extends State<AddHaveCardPage> {
     model.statementdate = _statementDateController.text;
     model.customer = new Customer();
     model.customer.iDCard = _idCardController.text;
+    model.customer.dateCreate = _dateOfBirthController.text;
     model.customer.cardExpries = _cardLimitController.text;
     model.customer.fullName =_fullNameController.text;
     model.customer.passport = _passportController.text;
     model.customer.phone = _phoneController.text;
     model.customer.address =_addressController.text;
+    model.customer.dateCreate =_datePassportCreateController.text;
     _bloc.postTransaction(context,model,SeoPage());
   }
   Widget build(BuildContext context) {

@@ -1,19 +1,29 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:fluttersetup/models/transaction_reponse.dart';
+import 'package:fluttersetup/models/transaction_request.dart';
+import 'package:fluttersetup/modules/demo_module/src/bloc/add_transaction_bloc.dart';
 import 'package:fluttersetup/ultilites/ultility.dart';
 import 'package:fluttersetup/widgets/widget.dart';
-import '../seo_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class EditNoCardPage extends StatefulWidget {
-  final TransactionResponse model;
+import 'seo_page.dart';
 
-  EditNoCardPage(this.model);
+class AddNoCardPage extends StatefulWidget {
   @override
-  _EditNoCardPageState createState() => _EditNoCardPageState();
+  _AddNoCardPageState createState() => _AddNoCardPageState();
 }
-class _EditNoCardPageState extends State<EditNoCardPage> {
+
+class _AddNoCardPageState extends State<AddNoCardPage> {
+  SharedPreferences prefs;
+  AddTransactionBloc _bloc;
+
+  getRefer() async{
+    prefs = await SharedPreferences.getInstance();
+    if(prefs == null)
+      prefs = await SharedPreferences.getInstance();
+
+  }
   TextEditingController _fullNameController = TextEditingController();
   TextEditingController _dateOfBirthController = TextEditingController();
   TextEditingController _passportController = TextEditingController();
@@ -21,7 +31,7 @@ class _EditNoCardPageState extends State<EditNoCardPage> {
   TextEditingController _phoneController = TextEditingController();
   TextEditingController _addressController = TextEditingController();
   TextEditingController _noteController = TextEditingController();
-  // focusText field
+
   final FocusNode _fullNameFocus = FocusNode();
   final FocusNode _dateOfBirthFocus = FocusNode();
   final FocusNode _passportFocus = FocusNode();
@@ -100,23 +110,33 @@ class _EditNoCardPageState extends State<EditNoCardPage> {
       onSubmitted: (event) => fieldFocusChange(context, _noteFocus, null),
     );
   }
+  void postTransaction(){
+    TransactionRequest model = new TransactionRequest();
+    model.status = 1;
+    model.statusDisbursed =0;
+    model.statusHandle=0;
+    model.iDUserCreate = prefs.getString("iduser");
+    model.customer = new Customer();
+    model.customer.fullName =_fullNameController.text;
+    model.customer.passport = _passportController.text;
+    model.customer.phone = _phoneController.text;
+    model.customer.address =_addressController.text;
+    model.customer.dateCreate =_datePassportCreateController.text;
+    model.note1 = _noteController.text;
+    _bloc.postTransaction(context,model,SeoPage());
+  }
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _fullNameController.text = widget.model.customer.fullName;
-    _dateOfBirthController.text = widget.model.customer.birthDay;
-    _passportController.text = widget.model.customer.passport;
-    _datePassportCreateController.text = widget.model.customer.dateCreate;
-    _phoneController.text = widget.model.customer.phone;
-    _addressController.text =widget.model.customer.phone;
-    _noteController.text = widget.model.note1;
+    _bloc = AddTransactionBloc();
+    getRefer();
   }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Cập nhật"),
+        title: Text("Thêm mới"),
         leading: FlatButton(onPressed: ()=>navigatorPush(context,SeoPage(),true), child: Icon(Icons.arrow_back)),
         actions: <Widget>[
           FlatButton(child:
@@ -129,8 +149,7 @@ class _EditNoCardPageState extends State<EditNoCardPage> {
 
             ],
           ),
-
-            onPressed: ()=> null,
+            onPressed: ()=> postTransaction(),
             color: Colors.limeAccent,
           ),
         ],
@@ -155,6 +174,7 @@ class _EditNoCardPageState extends State<EditNoCardPage> {
               Container(height: 10.0,),
               buildAddress(),
               Container(height: 10.0,),
+
               buildNote(),
             ],
           ),

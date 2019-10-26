@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttersetup/models/transaction_reponse.dart';
 import 'package:fluttersetup/ultilites/ultility.dart';
 import 'package:fluttersetup/widgets/widget.dart';
-
-import '../seo_page.dart';
+import 'seo_page.dart';
 
 class EditHaveCardPage extends StatefulWidget {
   final TransactionResponse model;

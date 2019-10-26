@@ -5,10 +5,11 @@ class CustomText extends StatelessWidget {
   final String text;
   final IconData prefixIcon;
   final Function onTap;
-
+  final Color colorChanel;
   CustomText({
     this.text,
     this.prefixIcon,
+    this.colorChanel,
     this.onTap
   });
 
@@ -31,7 +32,7 @@ class CustomText extends StatelessWidget {
               child: Text(
                 text,
                 textAlign: TextAlign.left,
-                style: TextStyle(fontSize: sizeBody1),
+                style: TextStyle(fontSize: sizeBody1,fontWeight: FontWeight.bold,color: colorChanel),
               ),
             )
           ],

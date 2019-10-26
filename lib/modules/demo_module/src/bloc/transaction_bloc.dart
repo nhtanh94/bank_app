@@ -30,6 +30,40 @@ class TransactionBloc{
   }
 
   getListTransaction(BuildContext context) async {
+      getListTransactionRequest model = getListTransactionRequest();
+      if(_prefs == null)
+        _prefs = await SharedPreferences.getInstance();
+      model.iDuser = _prefs.getString("iduser");
+      model.offset =0;
+      model.limit=1000;
+      showProgressDialog(context);
+      ApiResponseData response = await _repository.getListTransaction(context, model);
+      hideProgressDialog();
+
+      if(response.errorCode == 0){
+        _model = TransactionResponseModel.fromJson(response.data);
+        setModel(_model);
+      }
+
+}
+  getListTransactionByStatus(BuildContext context,int status) async {
+    getListTransactionRequest model = getListTransactionRequest();
+    if(_prefs == null)
+      _prefs = await SharedPreferences.getInstance();
+    model.iDuser = _prefs.getString("iduser");
+    model.offset =0;
+    model.limit=1000;
+    model.status = status;
+    showProgressDialog(context);
+    ApiResponseData response = await _repository.getListTransactionByStatus(context, model);
+    hideProgressDialog();
+
+    if(response.errorCode == 0){
+      _model = TransactionResponseModel.fromJson(response.data);
+      setModel(_model);
+    }
+  }
+  getListProcessTransaction(BuildContext context) async{
     getListTransactionRequest model = getListTransactionRequest();
     if(_prefs == null)
       _prefs = await SharedPreferences.getInstance();
@@ -37,7 +71,7 @@ class TransactionBloc{
     model.offset =0;
     model.limit=1000;
     showProgressDialog(context);
-    ApiResponseData response = await _repository.getListTransaction(context, model);
+    ApiResponseData response = await _repository.getListProcessTransaction(context, model);
     hideProgressDialog();
 
     if(response.errorCode == 0){
