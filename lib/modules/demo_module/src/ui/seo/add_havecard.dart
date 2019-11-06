@@ -26,6 +26,7 @@ class _AddHaveCardPageState extends State<AddHaveCardPage> {
   TextEditingController _bankController = TextEditingController();
   TextEditingController _idCardController = TextEditingController();
   TextEditingController _cardLimitController = TextEditingController();
+  TextEditingController _cardExpiresController = TextEditingController();
   TextEditingController _statementDateController = TextEditingController();
   TextEditingController _loanController = TextEditingController();
   TextEditingController _timeLoanController = TextEditingController();
@@ -41,6 +42,7 @@ class _AddHaveCardPageState extends State<AddHaveCardPage> {
   final FocusNode _bankFocus = FocusNode();
   final FocusNode _idCardFocus = FocusNode();
   final FocusNode _cardLimitFocus = FocusNode();
+  final FocusNode _cardExpiresFocus = FocusNode();
   final FocusNode _statementDateFocus = FocusNode();
   final FocusNode _loanFocus = FocusNode();
   final FocusNode _timeLoanFocus = FocusNode();
@@ -66,7 +68,7 @@ class _AddHaveCardPageState extends State<AddHaveCardPage> {
         name: "TGDĐ"
     ))..add(StatusModel(
         id: 1,
-        name: "Tiền mặc"
+        name: "Tiền mặt"
     ))..add(StatusModel(
         id: 2,
         name: "Chuyển khoản"
@@ -168,9 +170,19 @@ class _AddHaveCardPageState extends State<AddHaveCardPage> {
       controller: _cardLimitController,
       focusNode: _cardLimitFocus,
       textInputAction: TextInputAction.next,
+      labelText: "Giới hạn thẻ",
+      prefixIcon: Icons.credit_card,
+      onSubmitted: (event) => fieldFocusChange(context, _cardLimitFocus, _cardExpiresFocus),
+    );
+  }
+  Widget buildCardExpires() {
+    return CustomTextField(
+      controller: _cardExpiresController,
+      focusNode: _cardExpiresFocus,
+      textInputAction: TextInputAction.next,
       labelText: "Ngày hết hạn thẻ",
       prefixIcon: Icons.credit_card,
-      onSubmitted: (event) => fieldFocusChange(context, _cardLimitFocus, _statementDateFocus),
+      onSubmitted: (event) => fieldFocusChange(context, _cardExpiresFocus, _statementDateFocus),
     );
   }
   Widget buildStatementDate() {
@@ -216,7 +228,7 @@ class _AddHaveCardPageState extends State<AddHaveCardPage> {
   }
   Widget buildChanel(){
         return CustomText(
-          prefixIcon: Icons.check_circle,
+          prefixIcon: Icons.label_important,
           text: _chanelName,
           onTap: () => _showBottomDialog(),
         );
@@ -267,9 +279,11 @@ class _AddHaveCardPageState extends State<AddHaveCardPage> {
     model.timeLoan = _timeLoanController.text;
     model.statementdate = _statementDateController.text;
     model.customer = new Customer();
+    model.customer.birthDay = _dateOfBirthController.text;
     model.customer.iDCard = _idCardController.text;
     model.customer.dateCreate = _dateOfBirthController.text;
-    model.customer.cardExpries = _cardLimitController.text;
+    model.customer.cardLimit = _cardLimitController.text;
+    model.customer.cardExpries = _cardExpiresController.text;
     model.customer.fullName =_fullNameController.text;
     model.customer.passport = _passportController.text;
     model.customer.phone = _phoneController.text;
@@ -324,12 +338,15 @@ class _AddHaveCardPageState extends State<AddHaveCardPage> {
               Container(height: 10.0,),
               buildCardLimit(),
               Container(height: 10.0,),
+              buildCardExpires(),
+              Container(height: 10.0,),
               buildStatementDate(),
               Container(height: 10.0,),
               buildLoan(),
               Container(height: 10.0,),
               buildTimeLoan(),
               Container(height: 10.0,),
+              Text("Kênh giải ngân"),
               buildChanel(),
               Container(height: 10.0,),
               buildNote(),

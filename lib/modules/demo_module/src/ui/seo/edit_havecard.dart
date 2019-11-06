@@ -2,9 +2,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:fluttersetup/models/transaction_reponse.dart';
+import 'package:fluttersetup/modules/demo_module/src/bloc/edit_nocard_bloc.dart';
 import 'package:fluttersetup/ultilites/ultility.dart';
 import 'package:fluttersetup/widgets/widget.dart';
 import 'seo_page.dart';
+import 'package:fluttersetup/models/transaction_request.dart' as request;
 
 class EditHaveCardPage extends StatefulWidget {
   final TransactionResponse model;
@@ -25,6 +27,7 @@ class _EditHaveCardPageState extends State<EditHaveCardPage> {
   TextEditingController _bankController = TextEditingController();
   TextEditingController _idCardController = TextEditingController();
   TextEditingController _cardLimitController = TextEditingController();
+  TextEditingController _cardExpiresController = TextEditingController();
   TextEditingController _statementDateController = TextEditingController();
   TextEditingController _loanController = TextEditingController();
   TextEditingController _timeLoanController = TextEditingController();
@@ -40,11 +43,13 @@ class _EditHaveCardPageState extends State<EditHaveCardPage> {
   final FocusNode _bankFocus = FocusNode();
   final FocusNode _idCardFocus = FocusNode();
   final FocusNode _cardLimitFocus = FocusNode();
+  final FocusNode _cardExpiresFocus = FocusNode();
   final FocusNode _statementDateFocus = FocusNode();
   final FocusNode _loanFocus = FocusNode();
   final FocusNode _timeLoanFocus = FocusNode();
   final FocusNode _chanelFocus = FocusNode();
   final FocusNode _noteFocus = FocusNode();
+  EditNoCardBloc _bloc;
   Widget buildFullName() {
     return CustomTextField(
       controller: _fullNameController,
@@ -130,9 +135,19 @@ class _EditHaveCardPageState extends State<EditHaveCardPage> {
       controller: _cardLimitController,
       focusNode: _cardLimitFocus,
       textInputAction: TextInputAction.next,
+      labelText: "Giới hạn thẻ",
+      prefixIcon: Icons.credit_card,
+      onSubmitted: (event) => fieldFocusChange(context, _cardLimitFocus, _cardExpiresFocus),
+    );
+  }
+  Widget buildCardExpires() {
+    return CustomTextField(
+      controller: _cardExpiresController,
+      focusNode: _cardExpiresFocus,
+      textInputAction: TextInputAction.next,
       labelText: "Ngày hết hạn thẻ",
       prefixIcon: Icons.credit_card,
-      onSubmitted: (event) => fieldFocusChange(context, _cardLimitFocus, _statementDateFocus),
+      onSubmitted: (event) => fieldFocusChange(context, _cardExpiresFocus, _statementDateFocus),
     );
   }
   Widget buildStatementDate() {
@@ -185,6 +200,33 @@ class _EditHaveCardPageState extends State<EditHaveCardPage> {
       onSubmitted: (event) => fieldFocusChange(context, _noteFocus, null),
     );
   }
+  putHandelTransaction(){
+    request.TransactionRequest model = request.TransactionRequest();
+    model.iD = widget.model.iD;
+
+    model.customer = new request.Customer();
+    model.bankName = _bankController.text;
+    model.status = widget.model.status;
+    model.statusDisbursed = widget.model.statusDisbursed;
+    model.statusHandle = widget.model.statusHandle;
+    model.chanel = _chanelController.text;
+    model.loan = _loanController.text;
+    model.timeLoan = _timeLoanController.text;
+    model.statementdate = _statementDateController.text;
+    model.customer.fullName = _fullNameController.text;
+    model.customer.birthDay = _dateOfBirthController.text;
+    model.customer.phone = _phoneController.text;
+    model.customer.passport = _passportController.text;
+    model.customer.address =_addressController.text;
+    model.customer.dateCreate = _datePassportCreateController.text;
+    model.customer.iDCard = _idCardController.text;
+    model.customer.cardExpries = _cardExpiresController.text;
+    model.customer.cardLimit = _cardLimitController.text;
+    model.note1 = _noteController.text;
+    model.statusHandle = widget.model.statusHandle;
+    model.status = widget.model.status;
+    _bloc.putNoCardTransaction(context, model, SeoPage());
+  }
   @override
   Widget build(BuildContext context) {
 
@@ -204,7 +246,7 @@ class _EditHaveCardPageState extends State<EditHaveCardPage> {
             ],
           ),
 
-            onPressed: ()=> null,
+            onPressed: ()=> putHandelTransaction(),
             color: Colors.limeAccent,
           ),
         ],
@@ -254,15 +296,17 @@ class _EditHaveCardPageState extends State<EditHaveCardPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    _bloc = EditNoCardBloc();
     _fullNameController.text = widget.model.customer.fullName;
     _dateOfBirthController.text = widget.model.customer.birthDay;
     _passportController.text = widget.model.customer.passport;
     _datePassportCreateController.text = widget.model.customer.dateCreate;
     _phoneController.text = widget.model.customer.phone;
-    _addressController.text =widget.model.customer.phone;
+    _addressController.text =widget.model.customer.address;
     _bankController.text = widget.model.bankName;
     _idCardController.text = widget.model.customer.iDCard;
     _cardLimitController.text = widget.model.customer.cardLimit;
+    _cardExpiresController.text =widget.model.customer.cardExpries;
     _statementDateController.text = widget.model.statementdate;
     _loanController.text = widget.model.loan;
     _timeLoanController.text = widget.model.timeLoan;

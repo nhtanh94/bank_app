@@ -56,7 +56,7 @@ class _SeoPageState extends State<SeoPage> with SingleTickerProviderStateMixin {
                       borderRadius: BorderRadius.all(Radius.circular(50.0)),
                       child: FlutterLogo(colors: Colors.green,size: 80.0,),
                     ),
-                    Text(fullName,style: TextStyle(fontSize: 25.0,color: Colors.white),)
+                    Container(child: Text(fullName,style: TextStyle(color: Colors.white),))
                   ],
                 ),
               ),

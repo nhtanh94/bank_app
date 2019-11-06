@@ -60,7 +60,7 @@ class _ManagePageState extends State<ManagePage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-         Icon(Icons.label_important,color: Colors.green,),
+               Icon(Icons.label_important,color: Colors.green,),
               Container(width: 15.0),
               Expanded(
                 child: Column(
